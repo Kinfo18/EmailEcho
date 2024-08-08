@@ -1,0 +1,23 @@
+{
+    "email": {
+        "imap_server": "imap.example.com",
+        "imap_port": 993,
+        "smtp_server": "smtp.example.com",
+        "smtp_port": 587,
+        "username": "your_email@example.com",
+        "password": "your_encrypted_password"
+    },
+    "telegram": {
+        "bot_token": "your_bot_token",
+        "chat_id": "your_chat_id"
+    },
+    "check_interval": 3600,
+    "log_level": "INFO",
+    "max_log_size": 10485760,
+    "max_log_backups": 5,
+    "resource_threshold": {
+        "cpu": 80,
+        "memory": 80
+    },
+    "update_check_interval": 86400
+}
