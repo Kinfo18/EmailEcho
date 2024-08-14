@@ -1,22 +1,24 @@
 import imaplib
 import email
 from email.header import decode_header
-from src.config_manager import config_manager
-from src.error_handler import error_handler
-from src.logger import logger
+from error_handler import error_handler
+from logger import get_logger
 
 class EmailChecker:
-    def __init__(self):
-        self.imap_server = config_manager.get('email')['imap_server']
-        self.imap_port = config_manager.get('email')['imap_port']
-        self.username = config_manager.get('email')['username']
-        self.password = config_manager.decrypt(config_manager.get('email')['password'])
+    def __init__(self, config_manager):
+        self.config_manager = config_manager
+        self.logger = get_logger()
         self.last_checked_ids = set()
 
     @error_handler.handle
     def check_emails(self):
-        mail = imaplib.IMAP4_SSL(self.imap_server, self.imap_port)
-        mail.login(self.username, self.password)
+        imap_server = self.config_manager.get('email.imap_server')
+        imap_port = self.config_manager.get('email.imap_port')
+        username = self.config_manager.get('email.username')
+        password = self.config_manager.get_password()
+
+        mail = imaplib.IMAP4_SSL(imap_server, imap_port)
+        mail.login(username, password)
         mail.select('inbox')
 
         _, search_data = mail.search(None, 'UNSEEN')
@@ -44,5 +46,3 @@ class EmailChecker:
         mail.logout()
 
         return new_emails
-
-email_checker = EmailChecker()

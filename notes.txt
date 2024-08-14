@@ -1,0 +1,5 @@
+#configuración de IMAP y SMTP para su proveedor
+
+Para Gmail:
+IMAP: imap.gmail.com (puerto 993)
+SMTP: smtp.gmail.com (puerto 587)
